@@ -1,0 +1,24 @@
+================================================================
+
+    README file for Assignment 3 - HTTP Proxy
+
+    Name: Suhas Pai - CS17B116, C Gautam - CS17B047
+
+ 
+================================================================
+
+The proxy.c program implements the proxy server.
+
+Initially, a TCP socket is spawned, which acts as the proxy server. It is made to listen to incoming requests, on a port, which is taken in as a command line argument. Appropriate checks are made to ensure that the server has been set up correctly, and in case of failures, error messages are printed correspondingly.
+Upon receiving a request, the program forks a child, and calls a handler to handle that particular request. This ensures that multiple requests can be handled at the same time, parallely. The handler
+reads the request from the buffer, till it finds the appropriate delimiter.
+The request message is then parsed using the parser function from the proxy library. Bad requests are handled with appropriate error messages.
+If a port isn't specified in the request, port 80 is set as a default.
+Using the request message, a new request message is made, combining appropriate parameters.
+A new TCP socket is created, to send this request message to the server.
+The domain name in the request is looked up, and the request is sent to the translated ip address, and the port.
+The program waits till the server responds, and then reads the response message, till the delimiter. It then sends this response to the client, and closes all open sockets.
+Instructions to run is as follows -
+1)Run the makefile. 
+2)Once made, the tester can be run by using the command:
+    python proxy_tester.py proxy <port_no>
